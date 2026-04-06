@@ -1,0 +1,1024 @@
+===============================================================================================================================
+# Practical 1 — Basic MATLAB Functions for Image Processing
+===============================================================================================================================
+---
+
+## Q1 — imread Function
+Reads an image from file and displays it using `imread` and `imshow`.
+```matlab
+imshow(imread('weird.jpg'))
+```
+
+---
+
+## Q2 — imfinfo Function
+Retrieves and displays metadata of an image file using `imfinfo`.
+```matlab
+disp(imfinfo('weird.jpg'))
+```
+
+---
+
+## Q3 — size Function
+Returns the dimensions (rows, columns, channels) of an image array.
+```matlab
+size(imread('weird.jpg'))
+```
+
+---
+
+## Q4 — imshow Function
+Displays an image in a MATLAB figure window using `imshow`.
+```matlab
+imshow(imread('weird.jpg'))
+```
+
+---
+
+## Q5 — whos Function
+Displays memory size and data type information of the image variable.
+```matlab
+img = imread('weird.jpg'); whos img
+```
+
+---
+
+## Q6 — rgb2gray Function
+Converts a color RGB image to a grayscale image using `rgb2gray`.
+```matlab
+imshow(rgb2gray(imread('weird.jpg')))
+```
+
+---
+
+## Q7 — Line Plotting Command
+Plots a 2D line graph for given x and y data points using `plot`.
+```matlab
+plot([1.2 3 4], [3 2 7])
+```
+
+---
+
+## Q8 — imbinarize Command
+Converts a grayscale image to a binary (black & white) image using `imbinarize`.
+```matlab
+imshow(imbinarize(rgb2gray(imread('weird.jpg'))))
+```
+
+
+
+
+
+
+
+
+================================================================================================================================================
+# Practical 2 — Image Processing Commands
+================================================================================================================================================
+---
+
+## Q1 — sliceViewer Command
+Displays image slices interactively with a parula colormap using `sliceViewer`.
+```matlab
+sliceViewer(imread('weird.jpg'), 'Colormap', parula(6))
+```
+
+---
+
+## Q2 — imcrop Command
+Interactively crops a selected region from an image using `imcrop`.
+```matlab
+imshow(imcrop(imread('weird.jpg')))
+```
+
+---
+
+## Q3 — imrotate Command
+Rotates an image by 180° using bicubic interpolation with cropping.
+```matlab
+imshow(imrotate(imread('weird.jpg'), -180, 'bicubic', 'crop'))
+```
+
+---
+
+## Q4 — rescale Command
+Rescales image pixel intensities to the [0, 1] range using `rescale`.
+```matlab
+imshow(rescale(imread('weird.jpg')))
+```
+
+---
+
+## Q5 — 2D Viewer & 3D Viewer Command
+Displays an image in both 3D and 2D interactive viewers using `viewer3d` and `viewer2d`.
+```matlab
+imshow(imrotate(imread('weird.jpg'), -180, 'bicubic', 'crop'))
+imageshow('weird.jpg', Parent=viewer3d)
+imageshow('weird.jpg', Parent=viewer2d)
+```
+
+---
+
+## Q6 — immovie & implay Command
+Creates and plays a movie from MRI volume data using `immovie` and `implay`.
+```matlab
+load mri
+implay(immovie(D, map))
+```
+
+---
+
+## Q7 — zoom Command
+Enables interactive zoom on a displayed image using `zoom on`.
+```matlab
+imshow(imread('weird.jpg')), zoom on
+```
+
+---
+
+## Q8 — colormap Command
+Applies a parula colormap with a colorbar to a grayscale image.
+```matlab
+imshow(rgb2gray(imread('weird.jpg'))), colormap(parula), colorbar
+```
+
+---
+
+## Q9 — colorbar Command
+Displays a labeled colorbar indicating pixel intensity scale on a grayscale image.
+```matlab
+gray = rgb2gray(imread('weird.jpg'));
+imshow(gray), colormap(parula)
+cb = colorbar; cb.Label.String = 'Pixel Intensity';
+```
+
+---
+
+## Q10 — mesh Command
+Renders a 3D mesh plot of image intensity values using `mesh`.
+```matlab
+gray = rgb2gray(imread('weird.jpg'));
+[X, Y] = meshgrid(1:size(gray,2), 1:size(gray,1));
+mesh(X, Y, double(gray)), colormap(jet), colorbar
+```
+
+
+
+
+
+
+
+
+
+================================================================================================================================================
+# Practical 3 — Image Enhancement
+================================================================================================================================================
+---
+
+## Q1 — Contrast Command
+Enhances contrast of a grayscale image using `imadjust` to stretch intensity values.
+```matlab
+gray = rgb2gray(imread('weird.jpg'));
+subplot(1,2,1), imshow(gray), title('Original')
+subplot(1,2,2), imshow(imadjust(gray)), title('Contrast Enhanced')
+```
+
+---
+
+## Q2 — Sharpen Command
+Sharpens a grayscale image by emphasizing edges using `imsharpen`.
+```matlab
+gray = rgb2gray(imread('weird.jpg'));
+subplot(1,2,1), imshow(gray), title('Original')
+subplot(1,2,2), imshow(imsharpen(gray)), title('Sharpened')
+```
+
+---
+
+## Q3 — imfuse Command
+Blends two images into one using `imfuse` with blend mode.
+```matlab
+imshow(imfuse(imread('weird.jpg'), imread('weird2.jpeg'), 'blend'))
+```
+
+---
+
+## Q4 — Montage Command
+Displays multiple images in a single figure using `montage`.
+```matlab
+montage({imread('weird.jpg'), imread('weird2.jpeg')})
+```
+
+---
+
+## Q5 — Squeeze Command
+Removes singleton dimensions from a reshaped image array using `squeeze`.
+```matlab
+img = imread('weird.jpg');
+imshow(squeeze(reshape(img, size(img,1), size(img,2), 1, size(img,3))))
+```
+
+---
+
+## Q6 — Histogram Command
+Plots the intensity histogram of a grayscale image using `imhist`.
+```matlab
+imhist(rgb2gray(imread('weird.jpg')))
+```
+
+---
+
+## Q7 — histeq Command
+Equalizes the histogram of a grayscale image to improve contrast.
+```matlab
+imshow(histeq(rgb2gray(imread('weird.jpg'))))
+```
+
+---
+
+## Q8 — rgb2hsv Command
+Converts an RGB image to HSV color space for hue-saturation-value representation.
+```matlab
+imshow(rgb2hsv(imread('weird.jpg')))
+```
+
+---
+
+## Q9 — imresize Command
+Resizes an image to a fixed resolution of 256×256 pixels.
+```matlab
+imshow(imresize(imread('weird.jpg'), [256 256]))
+```
+
+---
+
+## Q10 — imnoise Command
+Adds Gaussian noise to an image to simulate real-world degradation.
+```matlab
+imshow(imnoise(imread('weird.jpg'), 'gaussian'))
+```
+
+---
+
+## Q11 — hsv2rgb Command
+Converts image to HSV and back to RGB, then displays as grayscale.
+```matlab
+img = imread('weird.jpg');
+imshow(rgb2gray(hsv2rgb(rgb2hsv(img))))
+```
+
+---
+
+## Q12 — imshowpair Command
+Displays two images side by side for visual comparison using `imshowpair`.
+```matlab
+imshowpair(imread('weird.jpg'), imread('weird2.jpeg'), 'montage')
+```
+
+
+
+
+
+
+================================================================================================================================================
+# Practical 4 — Convolution & Correlation
+================================================================================================================================================
+---
+
+## Q1 — Image Convolution & Correlation
+Applies a horizontal edge kernel to a grayscale image using convolution and correlation.
+```matlab
+gray = rgb2gray(imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg'));
+k    = [1 0 -1; 1 0 -1; 1 0 -1];
+subplot(1,3,1), imshow(gray),                                    title('Original')
+subplot(1,3,2), imshow(uint8(conv2(double(gray),k,'same'))),     title('Convolution')
+subplot(1,3,3), imshow(uint8(imfilter(double(gray),k,'corr'))), title('Correlation')
+```
+
+---
+
+## Q2 — Basic 2D Convolution
+Convolves two small matrices and displays the result.
+```matlab
+x = [1 2; 3 4];
+h = [5 6; 7 8];
+disp(conv2(x, h, 'same'))
+```
+
+---
+
+## Q3 — Circular Convolution
+Performs circular convolution using FFT multiplication in frequency domain.
+```matlab
+x = [1 2 3 4];
+h = [1 10 1 10];
+disp('Circular Convolution:')
+disp(real(ifft(fft(x) .* fft(h))))
+```
+
+---
+
+## Q4 — Circular Correlation
+Computes 2D circular correlation via FFT by flipping the kernel before multiplication.
+```matlab
+x = [10 4 7 8];
+h = [3 3 5 4];
+y = ifft2(fft2(x) .* fft2(flipud(fliplr(h))));
+disp('Circular Correlation:'), disp(real(y))
+```
+
+---
+
+## Q5 — Auto-Correlation
+Correlates a signal with itself to reveal repeating patterns and periodicity.
+```matlab
+x   = input('Enter sequence x[n]: ');
+rxx = xcorr(x);
+stem(-(length(x)-1):(length(x)-1), rxx)
+xlabel('Lag'), ylabel('Amplitude'), title('Auto-Correlation'), grid on
+```
+
+---
+
+## Q6 — Cross-Correlation
+Measures similarity between two different sequences as a function of lag.
+```matlab
+x   = input('Enter first sequence x[n]: ');
+y   = input('Enter second sequence y[n]: ');
+rxy = xcorr(x, y);
+stem(-(length(y)-1):(length(x)-1), rxy)
+xlabel('Lag'), ylabel('Amplitude'), title('Cross-Correlation'), grid on
+```
+
+
+
+
+
+
+
+
+
+
+
+================================================================================================================================================
+# Practical 5 — Frequency Domain & Transforms
+================================================================================================================================================
+---
+
+## Q1 — DFT (1D)
+Applies 1D Fourier Transform row-wise to a grayscale image and displays the spectrum.
+```matlab
+gray = rgb2gray(imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg'));
+dft  = fft(double(gray));
+subplot(1,2,1), imshow(gray),                  title('Original')
+subplot(1,2,2), imshow(log(1+abs(dft)),[]),    title('DFT')
+```
+
+---
+
+## Q2 — 2D DFT
+Applies 2D Fourier Transform to the full image, showing complete frequency spectrum.
+```matlab
+gray = rgb2gray(imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg'));
+dft2 = fft2(double(gray));
+subplot(1,2,1), imshow(gray),                  title('Original')
+subplot(1,2,2), imshow(log(1+abs(dft2)),[]),   title('2D DFT')
+```
+
+---
+
+## Q3 — Rotation Property
+Demonstrates how rotating an image affects its spatial structure at 45°, 90°, and 180°.
+```matlab
+img = imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg');
+subplot(2,2,1), imshow(img),               title('Original')
+subplot(2,2,2), imshow(imrotate(img,45)),  title('45°')
+subplot(2,2,3), imshow(imrotate(img,90)),  title('90°')
+subplot(2,2,4), imshow(imrotate(img,180)), title('180°')
+```
+
+---
+
+## Q4 — Image Blending
+Blends two images by fusing them with equal alpha weighting.
+```matlab
+img1 = imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg');
+img2 = imresize(imread('C:\Users\khush\OneDrive\Desktop/weird.jpg'), [size(img1,1) size(img1,2)]);
+subplot(1,2,1), imshow(img1),              title('Original')
+subplot(1,2,2), imshow(imfuse(img1,img2,'blend')), title('Blended')
+```
+
+---
+
+## Q5 — FFT (Shifted)
+Applies 2D FFT with `fftshift` to center the zero-frequency component for better visualization.
+```matlab
+gray    = rgb2gray(imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg'));
+fft_img = fftshift(fft2(double(gray)));
+subplot(1,2,1), imshow(gray),                   title('Original')
+subplot(1,2,2), imshow(log(1+abs(fft_img)),[]), title('FFT Shifted')
+```
+
+---
+
+## Q6 — FFT2 on Synthetic Pattern
+Shows the 2D FFT spectrum of a synthetic rectangular pattern to illustrate frequency domain behavior.
+```matlab
+f = zeros(30); f(5:24,13:17) = 1;
+F = fftshift(fft2(f));
+imshow(log(abs(F)),[-2 5],'InitialMagnification','fit')
+colormap(jet), colorbar, title('FFT2 Spectrum')
+```
+
+
+
+
+
+
+
+
+================================================================================================================================================
+# Practical 6 — Transforms
+================================================================================================================================================
+---
+
+## Q1 — Haar Transform
+Computes 2D Haar basis matrices using bit-level operations and displays them as images.
+```matlab
+n = input('Enter basis matrix dimension (power of 2): ');
+sn = log2(n);
+for u=0:n-1, for v=0:n-1, for x=0:n-1, for y=0:n-1
+    p = 0;
+    for i=0:sn-1
+        bx = bin2dec(dec2bin(x,sn)(sn-i)); by = bin2dec(dec2bin(y,sn)(sn-i));
+        bu = bin2dec(dec2bin(u,sn)(sn-i)); bv = bin2dec(dec2bin(v,sn)(sn-i));
+        p  = p + (bx*bu + by*bv);
+    end
+    basis{u+1,v+1}(x+1,y+1) = (-1)^p;
+end, end, end, end
+k=1;
+for i=1:n, for j=1:n
+    subplot(n,n,k), imshow(basis{i,j}), k=k+1;
+end, end
+```
+
+---
+
+## Q2 — Hadamard Transform
+Generates an N×N Hadamard matrix recursively using the Sylvester construction.
+```matlab
+n = input('Enter order (power of 2): ');
+H = 1;
+while size(H,1) < n
+    H = [H H; H -H];
+end
+disp(H)
+imagesc(H), colormap(gray), colorbar, title('Hadamard Matrix')
+```
+
+---
+
+## Q3 — Walsh Transform
+Computes 2D Walsh basis using sequency-ordered bit operations and displays the basis images.
+```matlab
+n = input('Enter basis matrix dimension (power of 2): ');
+sn = log2(n);
+for u=0:n-1, for v=0:n-1, for x=0:n-1, for y=0:n-1
+    p = 1;
+    for i=0:sn-1
+        bx = bin2dec(dec2bin(x,sn)(sn-i)); by = bin2dec(dec2bin(y,sn)(sn-i));
+        bu = bin2dec(dec2bin(u,sn)(i+1));  bv = bin2dec(dec2bin(v,sn)(i+1));
+        p  = p * (-1)^(bx*bu + by*bv);
+    end
+    basis{u+1,v+1}(x+1,y+1) = p;
+end, end, end, end
+k=1;
+for i=1:n, for j=1:n
+    subplot(n,n,k), imshow(basis{i,j}), k=k+1;
+end, end
+```
+
+---
+
+## Q4 — DCT Transform
+Generates 2D DCT basis images showing frequency components from low to high.
+```matlab
+n = input('Enter basis matrix dimension: ');
+a1 = ones(1,n)*sqrt(2/n); a1(1) = sqrt(1/n);
+a2 = a1;
+k=1;
+for u=0:n-1, for v=0:n-1
+    for x=0:n-1, for y=0:n-1
+        b{u+1,v+1}(x+1,y+1) = a1(u+1)*a2(v+1)*cos((2*x+1)*u*pi/(2*n))*cos((2*y+1)*v*pi/(2*n));
+    end, end
+    subplot(n,n,k), imagesc(b{u+1,v+1}), colormap gray, axis off, k=k+1;
+end, end
+```
+
+---
+
+## Q5 — Slant Transform
+Applies a 4×4 Slant transform block-wise to an image to decorrelate pixel data.
+```matlab
+img = im2double(rgb2gray(imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg')));
+a   = sqrt(2)/sqrt(5);
+S4  = [0.5  0.5   0.5   0.5;
+       a    a/2  -a/2  -a;
+       0.5 -0.5  -0.5   0.5;
+       a/2 -a     a    -a/2];
+out = blockproc(img,[4 4],@(b) S4*b.data*S4');
+subplot(1,2,1), imshow(img),                    title('Original')
+subplot(1,2,2), imshow(log(1+abs(out)),[]),     title('Slant Transform')
+```
+
+---
+
+## Q6 — KL Transform
+Decorrelates data by projecting it onto principal eigenvectors of the covariance matrix.
+```matlab
+X = input('Enter data matrix (e.g. [1 2 3; 4 5 6]): ');
+X0 = X - mean(X,2);
+[V,D] = eig(cov(X0'));
+[~,idx] = sort(diag(D),'descend');
+V = V(:,idx);
+disp('Eigenvalues:'),  disp(diag(D)(idx))
+disp('KL Transformed:'), disp(V'*X0)
+```
+
+---
+
+## Q7 — Z-Transform
+Computes and plots the frequency response of a discrete-time system using Z-Transform.
+```matlab
+b = [1 2 1];
+a = [1 -0.5 0.25];
+[H, w] = freqz(b, a, 512);
+subplot(2,1,1), plot(w/pi, abs(H)),   title('Magnitude'), xlabel('\omega/\pi')
+subplot(2,1,2), plot(w/pi, angle(H)), title('Phase'),     xlabel('\omega/\pi')
+```
+
+---
+
+## Q8 — SVD Transform
+Decomposes a matrix into U, S, V components and reconstructs a low-rank approximation.
+```matlab
+A = rand(5,4)*10;
+[U,S,V] = svd(A);
+disp('Singular Values:'), disp(diag(S))
+S2 = S; S2(3:end,3:end) = 0;
+disp('Rank-2 Approximation:'), disp(U*S2*V')
+```
+
+---
+
+## Q9 — Radon Transform
+Projects a 2D image at multiple angles to produce a sinogram used in tomographic imaging.
+```matlab
+I = zeros(100); I(25:75,25:75) = 1;
+[R,xp] = radon(I, 0:180);
+imshow(R,[],'Xdata',0:180,'Ydata',xp,'InitialMagnification','fit')
+xlabel('\theta'), ylabel('x'''), colormap(hot), colorbar, title('Radon Transform')
+```
+
+
+
+
+
+
+
+
+
+
+
+================================================================================================================================================
+# Practical 7 — Brightness & Contrast
+================================================================================================================================================
+---
+
+## Q1 — Image Negative
+Inverts pixel values — dark areas become bright and vice versa.
+```matlab
+img = imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg');
+subplot(1,2,1), imshow(img),              title('Original')
+subplot(1,2,2), imshow(imcomplement(img)), title('Negative')
+```
+
+---
+
+## Q2 — Thresholding
+Converts grayscale image to binary by setting pixels above 128 to white, rest to black.
+```matlab
+gray = rgb2gray(imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg'));
+subplot(1,2,1), imshow(gray),       title('Original')
+subplot(1,2,2), imshow(gray > 128), title('Threshold')
+```
+
+---
+
+## Q3 — Gray Level Slicing
+Highlights a specific intensity range (L/4 to 3L/4) to white, preserving the background.
+```matlab
+gray = double(rgb2gray(imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg')));
+out  = gray;
+out(gray >= round(255/4) & gray <= round(3*255/4)) = 255;
+subplot(1,2,1), imshow(uint8(gray)), title('Original')
+subplot(1,2,2), imshow(uint8(out)),  title('Gray Level Sliced')
+```
+
+---
+
+## Q4 — Bit Plane Slicing
+Extracts each of the 8 bit planes from a grayscale image to show contribution of each bit.
+```matlab
+gray = rgb2gray(imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg'));
+subplot(3,3,1), imshow(gray), title('Original')
+for i = 1:8
+    subplot(3,3,i+1), imshow(bitget(gray,i)*255), title(['Bit ',num2str(i)])
+end
+```
+
+---
+
+## Q5 — Log Transform
+Compresses high intensity values and expands dark ones, enhancing details in dark regions.
+```matlab
+img = double(imread('C:\Users\khush\OneDrive\Desktop/weird.jpg'));
+c   = 255 / log10(1 + 255);
+out = c * log10(1 + img);
+subplot(1,2,1), imshow(uint8(img)), title('Original')
+subplot(1,2,2), imshow(uint8(out)), title('Log Transform')
+```
+
+---
+
+## Q6 — Power Law (Gamma) Transform
+Applies gamma correction — values > 1 darken the image, values < 1 brighten it.
+```matlab
+a   = rgb2gray(imread('C:\Users\khush\OneDrive\Desktop/weird.jpg'));
+out = double(a) .^ 1.7;
+subplot(1,2,1), imshow(a),          title('Original')
+subplot(1,2,2), imshow(uint8(out)), title('Gamma = 1.7')
+```
+
+---
+
+## Q7 — Brightness Adjustment
+Increases or decreases overall pixel intensity by adding or subtracting a constant.
+```matlab
+a = imread('C:\Users\khush\OneDrive\Desktop/weird.jpg');
+subplot(1,3,1), imshow(a),                       title('Original')
+subplot(1,3,2), imshow(uint8(double(a) + 150)),  title('Brightness +')
+subplot(1,3,3), imshow(uint8(double(a) - 100)),  title('Brightness -')
+```
+
+---
+
+## Q8 — Contrast Adjustment
+Scales pixel values up or down to stretch or compress the intensity range.
+```matlab
+a = imread('C:\Users\khush\OneDrive\Desktop/weird.jpg');
+subplot(1,3,1), imshow(a),                      title('Original')
+subplot(1,3,2), imshow(uint8(double(a) * 2)),   title('Contrast +')
+subplot(1,3,3), imshow(uint8(double(a) * 0.5)), title('Contrast -')
+```
+
+
+
+
+
+
+
+
+================================================================================================================================================
+# Practical 8 — Filters
+================================================================================================================================================
+---
+
+## Q1 — Low Pass Filter
+Blurs the image by averaging neighboring pixels, suppressing high-frequency noise.
+```matlab
+gray = rgb2gray(imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg'));
+lp = imfilter(gray, fspecial('average',[5 5]));
+subplot(1,2,1), imshow(gray), title('Original')
+subplot(1,2,2), imshow(lp),   title('Low Pass')
+```
+
+---
+
+## Q2 — High Pass Filter
+Highlights edges by retaining high-frequency components using a Laplacian kernel.
+```matlab
+gray = rgb2gray(imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg'));
+hp = imfilter(gray, fspecial('laplacian', 0.2));
+subplot(1,2,1), imshow(gray),    title('Original')
+subplot(1,2,2), imshow(hp, []),  title('High Pass')
+```
+
+---
+
+## Q3 — Butterworth Low Pass Filter
+Smoothens the image in the frequency domain with a gradual cutoff to avoid ringing artifacts.
+```matlab
+gray = double(rgb2gray(imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg')));
+[M,N] = size(gray);
+[u,v] = meshgrid(1:N, 1:M);
+D = sqrt((u-N/2).^2 + (v-M/2).^2);
+H = 1 ./ (1 + (D./50).^4);
+g = real(ifft2(ifftshift(H .* fftshift(fft2(gray)))));
+subplot(1,2,1), imshow(uint8(gray)), title('Original')
+subplot(1,2,2), imshow(uint8(g)),    title('Butterworth LPF')
+```
+
+---
+
+## Q4 — Gaussian Filter
+Smoothens the image using a Gaussian kernel — less blurring than average filter, preserves edges better.
+```matlab
+gray = rgb2gray(imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg'));
+g = imfilter(gray, fspecial('gaussian',[5 5],1));
+subplot(1,2,1), imshow(gray), title('Original')
+subplot(1,2,2), imshow(g),    title('Gaussian Filter')
+```
+
+---
+
+## Q5 — Adding Noise
+Adds salt & pepper noise to simulate image corruption.
+```matlab
+img = imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg');
+noisy = imnoise(img, 'salt & pepper', 0.02);
+subplot(1,2,1), imshow(img),   title('Original')
+subplot(1,2,2), imshow(noisy), title('Noisy')
+```
+
+---
+
+## Q6 — 1D IIR Filter on Signal
+Filters a random signal row-wise using a simple IIR filter to show smoothing over time.
+```matlab
+rng default
+x = rand(2,15);
+y = filter(1, [1 -0.2], x, [], 2);
+t = 0:14;
+subplot(2,1,1), plot(t,x(1,:), t,y(1,:)), legend('Input','Filtered'), title('Row 1')
+subplot(2,1,2), plot(t,x(2,:), t,y(2,:)), legend('Input','Filtered'), title('Row 2')
+```
+
+---
+
+## Q7 — Filtering a Noisy Sine Wave
+Smoothens a sine wave corrupted with random noise using a moving average filter.
+```matlab
+t = linspace(-pi, pi, 100);
+x = sin(t) + 0.25*rand(size(t));
+y = filter((1/5)*ones(1,5), 1, x);
+plot(t,x, t,y), legend('Noisy','Filtered'), title('Sine Wave Filter')
+```
+
+---
+
+## Q8 — Noise Removal (Median Filter)
+Adds salt & pepper noise then removes it using a median filter.
+```matlab
+img = imread('C:\Users\khush\OneDrive\Desktop/weird2.jpeg');
+noisy = imnoise(img, 'salt & pepper', 0.2);
+clean = medfilt2(rgb2gray(noisy), [3 3]);
+subplot(1,3,1), imshow(img),   title('Original')
+subplot(1,3,2), imshow(noisy), title('Noisy')
+subplot(1,3,3), imshow(clean), title('Median Filtered')
+```
+
+
+
+
+================================================================================================================================================
+# Practical 9 — Binary & Color Image Processing
+================================================================================================================================================
+---
+
+## Q1 — Erosion
+Shrinks bright regions by applying a 3×3 structuring element.
+```matlab
+a = rgb2gray(imread("C:\Users\khush\OneDrive\Desktop/weird2.jpeg"));
+b = ones(3);
+figure, imshow(a), title('Original')
+figure, imshow(imerode(a,b)), title('Eroded')
+```
+
+---
+
+## Q2 — Dilation
+Expands bright regions by applying a 3×3 structuring element.
+```matlab
+a = rgb2gray(imread("C:\Users\khush\OneDrive\Desktop/weird2.jpeg"));
+b = ones(3);
+figure, imshow(a), title('Original')
+figure, imshow(imdilate(a,b)), title('Dilated')
+```
+
+---
+
+## Q3 — Opening
+Erosion followed by dilation — removes small bright noise while preserving shape.
+```matlab
+a = imread("C:\Users\khush\OneDrive\Desktop/weird2.jpeg");
+b = ones(3);
+subplot(1,2,1), imshow(a), title('Original')
+subplot(1,2,2), imshow(imopen(a,b)), title('Opened')
+```
+
+---
+
+## Q4 — Closing
+Dilation followed by erosion — fills small dark gaps while preserving shape.
+```matlab
+a = imread("C:\Users\khush\OneDrive\Desktop/weird2.jpeg");
+b = ones(3);
+subplot(1,2,1), imshow(a), title('Original')
+subplot(1,2,2), imshow(imclose(a,b)), title('Closed')
+```
+
+---
+
+## Q5 — RGB Channel Extraction
+Splits a color image into its Red, Green, and Blue planes.
+```matlab
+I = imread("C:\Users\khush\OneDrive\Desktop/weird2.jpeg");
+subplot(2,2,1), imshow(I),          title('Original')
+subplot(2,2,2), imshow(I(:,:,1)),   title('Red')
+subplot(2,2,3), imshow(I(:,:,2)),   title('Green')
+subplot(2,2,4), imshow(I(:,:,3)),   title('Blue')
+```
+
+---
+
+## Q6 — Histogram Equalization (Color Image)
+Equalizes brightness by applying `histeq` on the V (Value) channel in HSV space, leaving hue and saturation unchanged.
+```matlab
+I = im2double(imread("C:\Users\khush\OneDrive\Desktop/weird2.jpeg"));
+hsv = rgb2hsv(I);
+hsv(:,:,3) = histeq(hsv(:,:,3));
+subplot(1,2,1), imshow(I),            title('Original')
+subplot(1,2,2), imshow(hsv2rgb(hsv)), title('Equalized')
+```
+
+---
+
+## Q7 — RGB Histogram
+Plots pixel intensity distribution for each color channel.
+```matlab
+I = imread("C:\Users\khush\OneDrive\Desktop/weird2.jpeg");
+[r,x] = imhist(I(:,:,1));
+[g,~] = imhist(I(:,:,2));
+[b,~] = imhist(I(:,:,3));
+plot(x,r,'r', x,g,'g', x,b,'b');
+title('RGB Histogram'), xlabel('Intensity'), ylabel('Count'), legend('R','G','B'), grid on
+```
+
+---
+
+## Q8 — YCbCr Color Space
+Converts RGB to YCbCr and displays the Y (luminance), Cb (blue-diff), and Cr (red-diff) channels separately.
+```matlab
+RGB = imread("C:\Users\khush\OneDrive\Desktop/weird2.jpeg");
+YCC = rgb2ycbcr(RGB);
+subplot(1,3,1), imshow(YCC(:,:,1)), title('Y')
+subplot(1,3,2), imshow(YCC(:,:,2)), title('Cb')
+subplot(1,3,3), imshow(YCC(:,:,3)), title('Cr')
+```
+
+---
+
+## Q9 — Color Image Quantization
+Reduces the number of colors in an image to 16 using minimum variance quantization.
+```matlab
+RGB = imread('peppers.png');
+[X, map] = rgb2ind(RGB, 16);
+subplot(1,2,1), imshow(RGB),     title('Original')
+subplot(1,2,2), imshow(X, map),  title('Quantized (16 colors)')
+```
+
+---
+
+## Q10 — Smoothing
+Applies median filter on each RGB channel independently to reduce noise.
+```matlab
+A = imread("C:\Users\khush\OneDrive\Desktop/weird2.jpeg");
+S = cat(3, medfilt2(A(:,:,1),[3 3]), medfilt2(A(:,:,2),[3 3]), medfilt2(A(:,:,3),[3 3]));
+imshowpair(A, S, 'montage'), title('Original | Smoothed')
+```
+
+---
+
+## Q11 — Sharpening
+Enhances edges and fine details using unsharp masking.
+```matlab
+A = imread("C:\Users\khush\OneDrive\Desktop/weird2.jpeg");
+imshowpair(A, imsharpen(A), 'montage'), title('Original | Sharpened')
+```
+
+---
+
+## Q12 — Pseudo Coloring
+Maps grayscale intensity ranges to distinct RGB colors, making intensity differences visually distinct.
+```matlab
+a = double(rgb2gray(imread("C:\Users\khush\OneDrive\Desktop/weird2.jpeg")));
+[m,n] = size(a);
+out = zeros(m,n,3);
+ranges = [0 50; 50 100; 100 150; 150 200; 200 256];
+colors = [50 100 10; 35 128 10; 152 130 15; 50 140 25; 128 180 45];
+for k = 1:5
+    mask = a >= ranges(k,1) & a < ranges(k,2);
+    for c = 1:3
+        out(:,:,c) = out(:,:,c) + mask .* (a + colors(k,c));
+    end
+end
+subplot(1,2,1), imshow(uint8(a)),   title('Grayscale')
+subplot(1,2,2), imshow(uint8(out)), title('Pseudo Colored')
+```
+
+
+================================================================================================================================================
+Practical 10 — Image Segmentation and Compression
+================================================================================================================================================
+---
+
+## Q1 — Basic Segmentation
+Segments an image by thresholding the Cb channel after converting to YCbCr color space.
+```matlab
+a = imread('weird.jpg');
+mask = rgb2ycbcr(a)(:,:,2) > 120;
+subplot(1,2,1), imshow(a), title('Original')
+subplot(1,2,2), imshow(mask), title('Segmented')
+```
+
+---
+
+## Q2 — Edge Detection with Its Types
+Applies six edge detection methods (Sobel, Prewitt, Roberts, Canny, LoG, Zero-Cross) on each RGB channel.
+```matlab
+A = im2double(imread('weird2.jpeg'));
+R = A(:,:,1); G = A(:,:,2); B = A(:,:,3);
+ce = @(m) edge(R,m) | edge(G,m) | edge(B,m);
+h = fspecial('log',[5 5],0.5);
+zc = edge(imfilter(R,h),'zerocross') | edge(imfilter(G,h),'zerocross') | edge(imfilter(B,h),'zerocross');
+subplot(2,3,1), imshow(ce('sobel')),   title('Sobel')
+subplot(2,3,2), imshow(ce('prewitt')), title('Prewitt')
+subplot(2,3,3), imshow(ce('roberts')), title('Roberts')
+subplot(2,3,4), imshow(ce('canny')),   title('Canny')
+subplot(2,3,5), imshow(ce('log')),     title('LoG')
+subplot(2,3,6), imshow(zc),            title('Zero-Cross')
+```
+
+---
+
+## Q3 — Hough Transform
+Detects lines in an image by applying Canny edge detection followed by the Hough Transform.
+```matlab
+RGB = imread('weird2.jpeg');
+BW = edge(rgb2gray(RGB), 'canny');
+[H,T,R] = hough(BW, 'RhoResolution', 0.5, 'Theta', -90:0.5:89);
+subplot(2,1,1), imshow(RGB), title('Original')
+subplot(2,1,2), imshow(imadjust(rescale(H)), 'XData', T, 'YData', R, 'InitialMagnification', 'fit')
+xlabel('\theta'), ylabel('\rho'), title('Hough Transform')
+axis on, axis normal, colormap('hot')
+```
+
+---
+
+## Q4 — Run Length Encoding
+Encodes a sequence by counting consecutive repeated values, or decodes it back to the original.
+```matlab
+choice = input('Enter 1 for Encoding, 2 for Decoding: ');
+if choice == 1
+    a = input('Enter the array: ');
+    b = []; c = 1;
+    for i = 1:length(a)-1
+        if a(i) == a(i+1), c = c+1;
+        else, b = [b c a(i)]; c = 1; end
+    end
+    disp('Encoded:'), disp([b c a(end)])
+elseif choice == 2
+    a = input('Enter encoded array: ');
+    u = [];
+    for i = 1:2:length(a), u = [u repmat(a(i+1), 1, a(i))]; end
+    disp('Decoded:'), disp(u)
+else
+    disp('Invalid choice')
+end
+```
+
+---
+
+## Q5 — Huffman Encoding
+Builds a Huffman dictionary from symbol probabilities, encodes a signal, then decodes and verifies it.
+```matlab
+symbols = [1 2 3]; probs = [0.1 0.1 0.8];
+[dict, avglen] = huffmandict(symbols, probs);
+disp(dict), disp(['Avg Length: ' num2str(avglen)])
+sig = [3 3 1 3 3 3 3 3 3 2 3 1];
+enc = huffmanenco(sig, dict);
+dec = huffmandeco(enc, dict);
+disp(['Bits: ' num2str(length(enc))])
+disp(['Match: ' num2str(isequal(sig, dec))])
+```
